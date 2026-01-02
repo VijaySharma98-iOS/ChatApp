@@ -25,6 +25,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var inputViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var inputViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var voiceRecordButton: UIButton!
     
     // MARK: - Properties
     private var messages: [Message] = []
@@ -40,12 +41,16 @@ class ChatViewController: UIViewController {
     private let textViewMaxHeight: CGFloat = 150
     private var placeholderLabel: UILabel!
     
+    private var recordingOverlay: RecordingOverlayView!
+    private var isRecordingCancelled = false
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupTableView()
         setupKeyboardObservers()
+        setupVoiceRecording()
         loadSampleMessages()
     }
     
@@ -60,8 +65,9 @@ class ChatViewController: UIViewController {
         // Configure TextView (replacing TextField)
         setupTextView()
         
-        // Configure buttons
         sendButton.isEnabled = false
+        sendButton.isHidden = true
+        // Configure buttons
         
         removeMediaButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         removeMediaButton.tintColor = .systemGray
@@ -132,7 +138,7 @@ class ChatViewController: UIViewController {
         // Add to navigation bar
         navigationItem.rightBarButtonItems = [menuBarButton, videoBarButton, audioBarButton]
     }
-
+    
     // MARK: - Call Actions
     @objc private func audioCallTapped() {
         let alert = UIAlertController(
@@ -149,7 +155,7 @@ class ChatViewController: UIViewController {
         
         present(alert, animated: true)
     }
-
+    
     @objc private func videoCallTapped() {
         let alert = UIAlertController(
             title: "Video Call",
@@ -165,7 +171,7 @@ class ChatViewController: UIViewController {
         
         present(alert, animated: true)
     }
-
+    
     private func initiateAudioCall() {
         // Implement your audio call logic here
         print("Initiating audio call with \(user.name)")
@@ -179,7 +185,7 @@ class ChatViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-
+    
     private func initiateVideoCall() {
         // Implement your video call logic here
         print("Initiating video call with \(user.name)")
@@ -213,13 +219,136 @@ class ChatViewController: UIViewController {
         messageTextView.addSubview(placeholderLabel)
         
         NSLayoutConstraint.activate([
-            placeholderLabel.leadingAnchor.constraint(equalTo: messageTextView.leadingAnchor, constant: 13),
-            placeholderLabel.topAnchor.constraint(equalTo: messageTextView.topAnchor, constant: 8)
+            placeholderLabel.leadingAnchor.constraint(equalTo: messageTextView.leadingAnchor,
+                                                      constant: 13),
+            placeholderLabel.topAnchor.constraint(equalTo: messageTextView.topAnchor,
+                                                  constant: 8)
         ])
         
         // Set initial height constraint
         messageTextViewHeightConstraint.constant = textViewMinHeight
     }
+    
+    private func setupVoiceRecording() {
+        // Configure the button appearance
+        voiceRecordButton.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        voiceRecordButton.tintColor = .systemBlue
+        voiceRecordButton.isHidden = false
+        
+        // Make it circular
+        voiceRecordButton.layer.cornerRadius = 22 // Half of 44
+        voiceRecordButton.clipsToBounds = true
+        
+        // Add long press gesture for recording
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleVoiceRecordLongPress(_:)))
+        longPress.minimumPressDuration = 0.2
+        voiceRecordButton.addGestureRecognizer(longPress)
+        
+        // Add pan gesture for slide to cancel
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleVoiceRecordPan(_:)))
+        voiceRecordButton.addGestureRecognizer(pan)
+        
+        // Create recording overlay
+        recordingOverlay = RecordingOverlayView(frame: .zero)
+        recordingOverlay.translatesAutoresizingMaskIntoConstraints = false
+        recordingOverlay.isHidden = true
+        messageInputView.addSubview(recordingOverlay)
+        
+        NSLayoutConstraint.activate([
+            recordingOverlay.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 12),
+            recordingOverlay.trailingAnchor.constraint(equalTo: voiceRecordButton.leadingAnchor, constant: -8),
+            recordingOverlay.centerYAnchor.constraint(equalTo: messageTextView.centerYAnchor),
+            recordingOverlay.heightAnchor.constraint(equalToConstant: 44)
+        ])
+        
+        AudioRecordingManager.shared.onRecordingUpdate = { [weak self] duration in
+            self?.recordingOverlay.updateTime(duration)
+        }
+    }
+    
+    //    private func setupVoiceRecordingCallbacks() {
+    //        voiceRecordButton.onRecordingStart = { [weak self] in
+    //            self?.handleRecordingStart()
+    //        }
+    //
+    //        voiceRecordButton.onRecordingCancel = { [weak self] in
+    //            self?.handleRecordingCancel()
+    //        }
+    //
+    //        voiceRecordButton.onRecordingSend = { [weak self] url, duration in
+    //            self?.handleRecordingSend(url: url, duration: duration)
+    //        }
+    //
+    //        voiceRecordButton.onSlideUpdate = { [weak self] progress in
+    //            self?.recordingOverlay.updateCancelProgress(progress)
+    //        }
+    //
+    //        AudioRecordingManager.shared.onRecordingUpdate = { [weak self] duration in
+    //            self?.recordingOverlay.updateTime(duration)
+    //        }
+    //    }
+    
+    private func handleRecordingStart() {
+        // Hide keyboard and text input
+        messageTextView.resignFirstResponder()
+        
+        // Show recording overlay
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = false
+            self.messageTextView.alpha = 0
+            self.attachmentButton.alpha = 0
+            self.mediaPreviewContainer.alpha = 0
+        }
+        
+        // Haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+    }
+    
+    private func handleRecordingCancel() {
+        // Hide recording overlay
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = true
+            self.messageTextView.alpha = 1
+            self.attachmentButton.alpha = 1
+            self.mediaPreviewContainer.alpha = 1
+        }
+        
+        // Haptic feedback
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+    }
+    
+    private func handleRecordingSend(url: URL, duration: TimeInterval) {
+        // Hide recording overlay
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = true
+            self.messageTextView.alpha = 1
+            self.attachmentButton.alpha = 1
+            self.mediaPreviewContainer.alpha = 1
+        }
+        
+        // Create and send audio message
+        let message = Message(
+            type: .audio(url, duration),
+            isFromCurrentUser: true,
+            timestamp: Date()
+        )
+        
+        messages.append(message)
+        chatTableView.reloadData()
+        scrollToBottom(animated: true)
+        
+        // Haptic feedback
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+        
+        // Simulate response
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.simulateResponse()
+        }
+    }
+    
     
     private func setupCustomLeftBarButton() {
         // Create custom back button
@@ -545,11 +674,11 @@ class ChatViewController: UIViewController {
         updateSendButtonState()
     }
     
-    private func updateSendButtonState() {
-        let hasText = !(messageTextView.text?.trimmingCharacters(in: .whitespaces).isEmpty ?? true)
-        let hasMedia = pendingImage != nil || pendingVideoURL != nil
-        sendButton.isEnabled = hasText || hasMedia
-    }
+    //    private func updateSendButtonState() {
+    //        let hasText = !(messageTextView.text?.trimmingCharacters(in: .whitespaces).isEmpty ?? true)
+    //        let hasMedia = pendingImage != nil || pendingVideoURL != nil
+    //        sendButton.isEnabled = hasText || hasMedia
+    //    }
     
     private func simulateResponse() {
         // Randomly decide response type
@@ -673,15 +802,20 @@ class ChatViewController: UIViewController {
             return
         }
         
-        // Since the constraint is to safe area, we need to account for that
+        // Get the keyboard height
         let keyboardHeight = keyboardFrame.height
-        inputViewBottomConstraint.constant += keyboardHeight
+        
+        // Get safe area bottom inset
+        let bottomSafeArea = view.safeAreaInsets.bottom
+        
+        // Set the constraint to keyboard height minus safe area (since constraint is to safe area)
+        inputViewBottomConstraint.constant = keyboardHeight - bottomSafeArea
         
         UIView.animate(withDuration: duration) {
             self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.scrollToBottom(animated: true)
         }
-        
-        scrollToBottom(animated: true)
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {
@@ -689,6 +823,7 @@ class ChatViewController: UIViewController {
             return
         }
         
+        // Reset constraint to 0
         inputViewBottomConstraint.constant = 0
         
         UIView.animate(withDuration: duration) {
@@ -839,3 +974,158 @@ extension ChatViewController: ChatMessageCellDelegate {
         }
     }
 }
+extension ChatViewController {
+    @objc private func handleVoiceRecordLongPress(_ gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            startRecording()
+        case .ended, .cancelled, .failed:
+            if isRecordingCancelled {
+                cancelRecording()
+            } else {
+                finishRecording()
+            }
+            isRecordingCancelled = false
+        default:
+            break
+        }
+    }
+    
+    @objc private func handleVoiceRecordPan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: voiceRecordButton)
+        
+        // Calculate slide progress (slide left to cancel)
+        let progress = min(1.0, max(0.0, -translation.x / 150.0))
+        recordingOverlay.updateCancelProgress(progress)
+        
+        // Cancel if slid far enough
+        if progress >= 1.0 {
+            isRecordingCancelled = true
+            gesture.isEnabled = false
+            gesture.isEnabled = true
+        }
+    }
+    private func startRecording() {
+        do {
+            // Start audio recording (may throw)
+            _ = try AudioRecordingManager.shared.startRecording()
+        } catch {
+            // Provide feedback on failure and return early
+            let alert = UIAlertController(title: "Recording Failed", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+        
+        // Hide keyboard and text input
+        messageTextView.resignFirstResponder()
+        
+        // Show recording overlay with animation
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = false
+            self.messageTextView.alpha = 0
+            self.attachmentButton.alpha = 0
+            self.mediaPreviewContainer.alpha = 0
+        }
+        
+        // Haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+    }
+    private func cancelRecording() {
+        // Stop recording
+        AudioRecordingManager.shared.cancelRecording()
+        
+        // Hide recording overlay
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = true
+            self.messageTextView.alpha = 1
+            self.attachmentButton.alpha = 1
+            self.mediaPreviewContainer.alpha = 1
+        }
+        
+        // Haptic feedback
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+    }
+    
+    private func finishRecording() {
+        // Finish recording and get URL
+        guard let result = AudioRecordingManager.shared.stopRecording(),
+              let url = result.0 else {
+            cancelRecording()
+            return
+        }
+        
+        let duration = result.1
+        
+        // Check minimum duration
+        if duration < 1.0 {
+            // Too short, show alert
+            try? FileManager.default.removeItem(at: url)
+            cancelRecording()
+            
+            let alert = UIAlertController(
+                title: "Recording Too Short",
+                message: "Please hold for at least 1 second to send a voice message.",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+        
+        // Hide recording overlay
+        UIView.animate(withDuration: 0.2) {
+            self.recordingOverlay.isHidden = true
+            self.messageTextView.alpha = 1
+            self.attachmentButton.alpha = 1
+            self.mediaPreviewContainer.alpha = 1
+        }
+        
+        // Create and send audio message
+        let message = Message(
+            type: .audio(url, duration),
+            isFromCurrentUser: true,
+            timestamp: Date()
+        )
+        
+        messages.append(message)
+        chatTableView.reloadData()
+        scrollToBottom(animated: true)
+        
+        // Haptic feedback
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+        
+        // Simulate response
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.simulateResponse()
+        }
+    }
+    
+    // MARK: - Update Send Button State
+    private func updateSendButtonState() {
+        let hasText = !(messageTextView.text?.trimmingCharacters(in: .whitespaces).isEmpty ?? true)
+        let hasMedia = pendingImage != nil || pendingVideoURL != nil
+        
+        let shouldEnableSend = hasText || hasMedia
+        sendButton.isEnabled = shouldEnableSend
+        
+        // Toggle between send button and voice record button with animation
+        UIView.animate(withDuration: 0.2) {
+            if shouldEnableSend {
+                self.sendButton.alpha = 1
+                self.sendButton.isHidden = false
+                self.voiceRecordButton.alpha = 0
+                self.voiceRecordButton.isHidden = true
+            } else {
+                self.sendButton.alpha = 0
+                self.sendButton.isHidden = true
+                self.voiceRecordButton.alpha = 1
+                self.voiceRecordButton.isHidden = false
+            }
+        }
+    }
+}
+
