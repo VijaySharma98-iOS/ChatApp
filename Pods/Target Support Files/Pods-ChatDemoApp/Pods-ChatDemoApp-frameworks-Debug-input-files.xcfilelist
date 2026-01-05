@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp-frameworks.sh
+${PODS_XCFRAMEWORKS_BUILD_DIR}/TwilioAudioProcessors/TwilioAudioProcessors.framework/TwilioAudioProcessors
+${PODS_XCFRAMEWORKS_BUILD_DIR}/TwilioVideo/TwilioVideo.framework/TwilioVideo

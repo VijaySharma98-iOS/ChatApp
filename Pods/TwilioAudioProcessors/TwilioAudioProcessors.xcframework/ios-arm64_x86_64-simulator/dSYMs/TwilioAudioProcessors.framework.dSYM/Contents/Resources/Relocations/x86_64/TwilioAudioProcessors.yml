@@ -1,0 +1,91 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/distiller/project/temp/DerivedData/Build/Intermediates.noindex/ArchiveIntermediates/TwilioAudioProcessors/InstallationBuildProductsLocation/Library/Frameworks/TwilioAudioProcessors.framework/TwilioAudioProcessors'
+relocations:
+  - { offset: 0x79B8A, size: 0x8, addend: 0x0, symName: _TwilioAudioProcessorsVersionString, symObjAddr: 0x0, symBinAddr: 0x87190, symSize: 0x0 }
+  - { offset: 0x79BBF, size: 0x8, addend: 0x0, symName: _TwilioAudioProcessorsVersionNumber, symObjAddr: 0x40, symBinAddr: 0x871D0, symSize: 0x0 }
+  - { offset: 0x79BFC, size: 0x8, addend: 0x0, symName: '+[TVIKrisp fullbandModelName]', symObjAddr: 0x0, symBinAddr: 0xE60, symSize: 0x20 }
+  - { offset: 0x79C16, size: 0x8, addend: 0x0, symName: _kTVIKrispModelResourceBundleNotFound, symObjAddr: 0x898, symBinAddr: 0x95278, symSize: 0x0 }
+  - { offset: 0x79C71, size: 0x8, addend: 0x0, symName: _sessionId, symObjAddr: 0x4758, symBinAddr: 0x98698, symSize: 0x0 }
+  - { offset: 0x79CF0, size: 0x8, addend: 0x0, symName: '+[TVIKrisp fullbandModelName]', symObjAddr: 0x0, symBinAddr: 0xE60, symSize: 0x20 }
+  - { offset: 0x79D2F, size: 0x8, addend: 0x0, symName: '+[TVIKrisp widebandModelName]', symObjAddr: 0x20, symBinAddr: 0xE80, symSize: 0x20 }
+  - { offset: 0x79D6E, size: 0x8, addend: 0x0, symName: '+[TVIKrisp initialize]', symObjAddr: 0x40, symBinAddr: 0xEA0, symSize: 0x20 }
+  - { offset: 0x79DD2, size: 0x8, addend: 0x0, symName: '+[TVIKrisp getVersion]', symObjAddr: 0x60, symBinAddr: 0xEC0, symSize: 0xD0 }
+  - { offset: 0x79F19, size: 0x8, addend: 0x0, symName: '+[TVIKrisp createSession]', symObjAddr: 0x130, symBinAddr: 0xF90, symSize: 0xE0 }
+  - { offset: 0x7A02B, size: 0x8, addend: 0x0, symName: '+[TVIKrisp loadModelResource:withName:]', symObjAddr: 0x210, symBinAddr: 0x1070, symSize: 0x200 }
+  - { offset: 0x7A284, size: 0x8, addend: 0x0, symName: '+[TVIKrisp getWideString:]', symObjAddr: 0x410, symBinAddr: 0x1270, symSize: 0x80 }
+  - { offset: 0x7A389, size: 0x8, addend: 0x0, symName: '+[TVIKrisp closeSession]', symObjAddr: 0x490, symBinAddr: 0x12F0, symSize: 0x20 }
+  - { offset: 0x7A3F2, size: 0x8, addend: 0x0, symName: '+[TVIKrisp sessionSampleRate]', symObjAddr: 0x4B0, symBinAddr: 0x1310, symSize: 0x50 }
+  - { offset: 0x7A451, size: 0x8, addend: 0x0, symName: '+[TVIKrisp updateModel]', symObjAddr: 0x500, symBinAddr: 0x1360, symSize: 0xE0 }
+  - { offset: 0x7A611, size: 0x8, addend: 0x0, symName: '+[TVIKrisp processInputBuffer:inputBufferFrameSize:outputBuffer:outputBufferFrameSize:]', symObjAddr: 0x5E0, symBinAddr: 0x1440, symSize: 0x30 }
+  - { offset: 0x7A6EF, size: 0x8, addend: 0x0, symName: '+[TVIKrisp getFrameDuration:]', symObjAddr: 0x610, symBinAddr: 0x1470, symSize: 0x10 }
+  - { offset: 0x7A72E, size: 0x8, addend: 0x0, symName: '+[TVIKrisp getSampleRate:]', symObjAddr: 0x620, symBinAddr: 0x1480, symSize: 0x9B }
+  - { offset: 0x7A837, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor init]', symObjAddr: 0x0, symBinAddr: 0x1520, symSize: 0x250 }
+  - { offset: 0x7A92C, size: 0x8, addend: 0x0, symName: _kMaximumFramesPerBuffer, symObjAddr: 0x4338, symBinAddr: 0x98468, symSize: 0x0 }
+  - { offset: 0x7A942, size: 0x8, addend: 0x0, symName: _krispSessionRefCount, symObjAddr: 0x11C88, symBinAddr: 0x986A0, symSize: 0x0 }
+  - { offset: 0x7AB61, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor init]', symObjAddr: 0x0, symBinAddr: 0x1520, symSize: 0x250 }
+  - { offset: 0x7ADC9, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor dealloc]', symObjAddr: 0x250, symBinAddr: 0x1770, symSize: 0xD0 }
+  - { offset: 0x7AED3, size: 0x8, addend: 0x0, symName: '+[TVINoiseCancellationProcessor initialize]', symObjAddr: 0x320, symBinAddr: 0x1840, symSize: 0x130 }
+  - { offset: 0x7B10E, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor pauseProcessing]', symObjAddr: 0x450, symBinAddr: 0x1970, symSize: 0x60 }
+  - { offset: 0x7B182, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setPauseProcessing:]', symObjAddr: 0x4B0, symBinAddr: 0x19D0, symSize: 0x60 }
+  - { offset: 0x7B1FA, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setEnabled:]', symObjAddr: 0x510, symBinAddr: 0x1A30, symSize: 0xE0 }
+  - { offset: 0x7B2D7, size: 0x8, addend: 0x0, symName: '___44-[TVINoiseCancellationProcessor setEnabled:]_block_invoke', symObjAddr: 0x5F0, symBinAddr: 0x1B10, symSize: 0x100 }
+  - { offset: 0x7B3A8, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s, symObjAddr: 0x6F0, symBinAddr: 0x1C10, symSize: 0x10 }
+  - { offset: 0x7B3DB, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s, symObjAddr: 0x700, symBinAddr: 0x1C20, symSize: 0x10 }
+  - { offset: 0x7B406, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor name]', symObjAddr: 0x710, symBinAddr: 0x1C30, symSize: 0x10 }
+  - { offset: 0x7B439, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor isProcessingSupported]', symObjAddr: 0x720, symBinAddr: 0x1C40, symSize: 0x60 }
+  - { offset: 0x7B4AD, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setProcessingSupported:]', symObjAddr: 0x780, symBinAddr: 0x1CA0, symSize: 0x60 }
+  - { offset: 0x7B525, size: 0x8, addend: 0x0, symName: '+[TVINoiseCancellationProcessor processBuffer:bufferSize:context:]', symObjAddr: 0x7E0, symBinAddr: 0x1D00, symSize: 0x190 }
+  - { offset: 0x7B654, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor resetAudioCache]', symObjAddr: 0x970, symBinAddr: 0x1E90, symSize: 0xD0 }
+  - { offset: 0x7B756, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor renderFormat]', symObjAddr: 0xA40, symBinAddr: 0x1F60, symSize: 0x90 }
+  - { offset: 0x7B7D2, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor initializeRenderer]', symObjAddr: 0xAD0, symBinAddr: 0x1FF0, symSize: 0x10 }
+  - { offset: 0x7B806, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor startRendering:]', symObjAddr: 0xAE0, symBinAddr: 0x2000, symSize: 0xB0 }
+  - { offset: 0x7B8D1, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor stopRendering]', symObjAddr: 0xB90, symBinAddr: 0x20B0, symSize: 0x90 }
+  - { offset: 0x7B96E, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor captureFormat]', symObjAddr: 0xC20, symBinAddr: 0x2140, symSize: 0x60 }
+  - { offset: 0x7B9CA, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor initializeCapturer]', symObjAddr: 0xC80, symBinAddr: 0x21A0, symSize: 0x20 }
+  - { offset: 0x7BA00, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor startCapturing:]', symObjAddr: 0xCA0, symBinAddr: 0x21C0, symSize: 0x120 }
+  - { offset: 0x7BB19, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor stopCapturing]', symObjAddr: 0xDC0, symBinAddr: 0x22E0, symSize: 0x90 }
+  - { offset: 0x7BBB6, size: 0x8, addend: 0x0, symName: '+[TVINoiseCancellationProcessor activeFormat]', symObjAddr: 0xE50, symBinAddr: 0x2370, symSize: 0x90 }
+  - { offset: 0x7BC4C, size: 0x8, addend: 0x0, symName: '+[TVINoiseCancellationProcessor audioUnitDescription]', symObjAddr: 0xEE0, symBinAddr: 0x2400, symSize: 0x20 }
+  - { offset: 0x7BC91, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setupAVAudioSession]', symObjAddr: 0xF00, symBinAddr: 0x2420, symSize: 0x360 }
+  - { offset: 0x7BFE1, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setupAndStartAudioUnit]', symObjAddr: 0x1260, symBinAddr: 0x2780, symSize: 0xD0 }
+  - { offset: 0x7C0E1, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor stopAndTeardownAudioUnit]', symObjAddr: 0x1330, symBinAddr: 0x2850, symSize: 0x80 }
+  - { offset: 0x7C172, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setupAudioUnitWithCaptureContext:renderContext:]', symObjAddr: 0x13B0, symBinAddr: 0x28D0, symSize: 0x310 }
+  - { offset: 0x7C424, size: 0x8, addend: 0x0, symName: _AudioProcessorDevicePlayoutCallback, symObjAddr: 0x16C0, symBinAddr: 0x2BE0, symSize: 0xA0 }
+  - { offset: 0x7C518, size: 0x8, addend: 0x0, symName: _AudioProcessorDeviceRecordCallback, symObjAddr: 0x1760, symBinAddr: 0x2C80, symSize: 0xD0 }
+  - { offset: 0x7C671, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor startAudioUnit]', symObjAddr: 0x1830, symBinAddr: 0x2D50, symSize: 0x170 }
+  - { offset: 0x7C7E7, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor stopAudioUnit]', symObjAddr: 0x19A0, symBinAddr: 0x2EC0, symSize: 0xA0 }
+  - { offset: 0x7C8AA, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor teardownAudioUnit]', symObjAddr: 0x1A40, symBinAddr: 0x2F60, symSize: 0x30 }
+  - { offset: 0x7C90D, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor deviceContext]', symObjAddr: 0x1A70, symBinAddr: 0x2F90, symSize: 0x60 }
+  - { offset: 0x7C997, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor registerAVAudioSessionObservers]', symObjAddr: 0x1AD0, symBinAddr: 0x2FF0, symSize: 0x160 }
+  - { offset: 0x7CAE1, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleAudioInterruption:]', symObjAddr: 0x1C30, symBinAddr: 0x3150, symSize: 0x130 }
+  - { offset: 0x7CC19, size: 0x8, addend: 0x0, symName: '___57-[TVINoiseCancellationProcessor handleAudioInterruption:]_block_invoke', symObjAddr: 0x1D60, symBinAddr: 0x3280, symSize: 0xD0 }
+  - { offset: 0x7CCE4, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleApplicationDidBecomeActive:]', symObjAddr: 0x1E30, symBinAddr: 0x3350, symSize: 0xC0 }
+  - { offset: 0x7CDBC, size: 0x8, addend: 0x0, symName: '___66-[TVINoiseCancellationProcessor handleApplicationDidBecomeActive:]_block_invoke', symObjAddr: 0x1EF0, symBinAddr: 0x3410, symSize: 0x80 }
+  - { offset: 0x7CE46, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleRouteChange:]', symObjAddr: 0x1F70, symBinAddr: 0x3490, symSize: 0x130 }
+  - { offset: 0x7CF7E, size: 0x8, addend: 0x0, symName: '___51-[TVINoiseCancellationProcessor handleRouteChange:]_block_invoke', symObjAddr: 0x20A0, symBinAddr: 0x35C0, symSize: 0x20 }
+  - { offset: 0x7CFCC, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleValidRouteChange]', symObjAddr: 0x20C0, symBinAddr: 0x35E0, symSize: 0x80 }
+  - { offset: 0x7D052, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor didFormatChange]', symObjAddr: 0x2140, symBinAddr: 0x3660, symSize: 0xB0 }
+  - { offset: 0x7D134, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor reinitialize]', symObjAddr: 0x21F0, symBinAddr: 0x3710, symSize: 0x240 }
+  - { offset: 0x7D3A5, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleMediaServiceLost:]', symObjAddr: 0x2430, symBinAddr: 0x3950, symSize: 0xC0 }
+  - { offset: 0x7D47D, size: 0x8, addend: 0x0, symName: '___56-[TVINoiseCancellationProcessor handleMediaServiceLost:]_block_invoke', symObjAddr: 0x24F0, symBinAddr: 0x3A10, symSize: 0x20 }
+  - { offset: 0x7D4CB, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor handleMediaServiceRestored:]', symObjAddr: 0x2510, symBinAddr: 0x3A30, symSize: 0xC0 }
+  - { offset: 0x7D5A3, size: 0x8, addend: 0x0, symName: '___60-[TVINoiseCancellationProcessor handleMediaServiceRestored:]_block_invoke', symObjAddr: 0x25D0, symBinAddr: 0x3AF0, symSize: 0x20 }
+  - { offset: 0x7D5F1, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor unregisterAVAudioSessionObservers]', symObjAddr: 0x25F0, symBinAddr: 0x3B10, symSize: 0x60 }
+  - { offset: 0x7D651, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor isEnabled]', symObjAddr: 0x2650, symBinAddr: 0x3B70, symSize: 0x10 }
+  - { offset: 0x7D686, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor isInterrupted]', symObjAddr: 0x2660, symBinAddr: 0x3B80, symSize: 0x10 }
+  - { offset: 0x7D6BB, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setInterrupted:]', symObjAddr: 0x2670, symBinAddr: 0x3B90, symSize: 0x10 }
+  - { offset: 0x7D6F8, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor audioUnit]', symObjAddr: 0x2680, symBinAddr: 0x3BA0, symSize: 0x10 }
+  - { offset: 0x7D72D, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setAudioUnit:]', symObjAddr: 0x2690, symBinAddr: 0x3BB0, symSize: 0x10 }
+  - { offset: 0x7D76A, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor captureBufferList]', symObjAddr: 0x26A0, symBinAddr: 0x3BC0, symSize: 0x20 }
+  - { offset: 0x7D79F, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setCaptureBufferList:]', symObjAddr: 0x26C0, symBinAddr: 0x3BE0, symSize: 0x20 }
+  - { offset: 0x7D7DD, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor renderingFormat]', symObjAddr: 0x26E0, symBinAddr: 0x3C00, symSize: 0x10 }
+  - { offset: 0x7D812, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setRenderingFormat:]', symObjAddr: 0x26F0, symBinAddr: 0x3C10, symSize: 0x20 }
+  - { offset: 0x7D853, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor capturingFormat]', symObjAddr: 0x2710, symBinAddr: 0x3C30, symSize: 0x10 }
+  - { offset: 0x7D888, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setCapturingFormat:]', symObjAddr: 0x2720, symBinAddr: 0x3C40, symSize: 0x20 }
+  - { offset: 0x7D8C9, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor renderingContext]', symObjAddr: 0x2740, symBinAddr: 0x3C60, symSize: 0x10 }
+  - { offset: 0x7D8FE, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setRenderingContext:]', symObjAddr: 0x2750, symBinAddr: 0x3C70, symSize: 0x10 }
+  - { offset: 0x7D93B, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor capturingContext]', symObjAddr: 0x2760, symBinAddr: 0x3C80, symSize: 0x10 }
+  - { offset: 0x7D970, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor setCapturingContext:]', symObjAddr: 0x2770, symBinAddr: 0x3C90, symSize: 0x10 }
+  - { offset: 0x7D9AD, size: 0x8, addend: 0x0, symName: '-[TVINoiseCancellationProcessor .cxx_destruct]', symObjAddr: 0x2780, symBinAddr: 0x3CA0, symSize: 0x28 }
+...

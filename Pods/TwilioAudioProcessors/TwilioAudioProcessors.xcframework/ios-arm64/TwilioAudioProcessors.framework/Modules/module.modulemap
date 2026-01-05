@@ -1,0 +1,6 @@
+framework module TwilioAudioProcessors {
+  umbrella header "TwilioAudioProcessors.h"
+  export *
+
+  module * { export * }
+}

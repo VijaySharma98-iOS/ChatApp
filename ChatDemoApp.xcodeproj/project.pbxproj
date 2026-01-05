@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E076FE8FCBD0BADB0F9356C3 /* Pods_ChatDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9988EF4A275A3DAA27228A00 /* Pods_ChatDemoApp.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		211AB4782F03EC4200AD5BB0 /* ChatDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D3C1410564A18D5400F5C21 /* Pods-ChatDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatDemoApp.release.xcconfig"; path = "Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp.release.xcconfig"; sourceTree = "<group>"; };
+		89F5144C716DBB5658DE2AFA /* Pods-ChatDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9988EF4A275A3DAA27228A00 /* Pods_ChatDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E076FE8FCBD0BADB0F9356C3 /* Pods_ChatDemoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +55,8 @@
 			children = (
 				211AB47A2F03EC4200AD5BB0 /* ChatDemoApp */,
 				211AB4792F03EC4200AD5BB0 /* Products */,
+				80F88C5C0CDBEE24B69382DC /* Pods */,
+				547BECD0EFC67E927978C703 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +68,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		547BECD0EFC67E927978C703 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9988EF4A275A3DAA27228A00 /* Pods_ChatDemoApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		80F88C5C0CDBEE24B69382DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				89F5144C716DBB5658DE2AFA /* Pods-ChatDemoApp.debug.xcconfig */,
+				5D3C1410564A18D5400F5C21 /* Pods-ChatDemoApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 211AB48B2F03EC4400AD5BB0 /* Build configuration list for PBXNativeTarget "ChatDemoApp" */;
 			buildPhases = (
+				E6109AD4666229FC6D1C54BB /* [CP] Check Pods Manifest.lock */,
 				211AB4742F03EC4200AD5BB0 /* Sources */,
 				211AB4752F03EC4200AD5BB0 /* Frameworks */,
 				211AB4762F03EC4200AD5BB0 /* Resources */,
+				4CC92A84A099A4CB0697FE93 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -77,8 +106,6 @@
 				211AB47A2F03EC4200AD5BB0 /* ChatDemoApp */,
 			);
 			name = ChatDemoApp;
-			packageProductDependencies = (
-			);
 			productName = ChatDemoApp;
 			productReference = 211AB4782F03EC4200AD5BB0 /* ChatDemoApp.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +154,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4CC92A84A099A4CB0697FE93 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatDemoApp/Pods-ChatDemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6109AD4666229FC6D1C54BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChatDemoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		211AB4742F03EC4200AD5BB0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,19 +213,26 @@
 /* Begin XCBuildConfiguration section */
 		211AB48C2F03EC4400AD5BB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89F5144C716DBB5658DE2AFA /* Pods-ChatDemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6DHM45PKDZ;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatDemoApp/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take photos and videos for messaging.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to record videos with audio.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to share images and videos in chat.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -177,19 +257,26 @@
 		};
 		211AB48D2F03EC4400AD5BB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D3C1410564A18D5400F5C21 /* Pods-ChatDemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6DHM45PKDZ;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatDemoApp/Info.plist;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take photos and videos for messaging.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to record videos with audio.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to share images and videos in chat.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

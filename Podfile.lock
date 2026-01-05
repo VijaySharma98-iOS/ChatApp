@@ -1,0 +1,21 @@
+PODS:
+  - TwilioAudioProcessors (5.11.0):
+    - TwilioVideo
+  - TwilioVideo (5.11.0)
+
+DEPENDENCIES:
+  - TwilioAudioProcessors
+  - TwilioVideo
+
+SPEC REPOS:
+  trunk:
+    - TwilioAudioProcessors
+    - TwilioVideo
+
+SPEC CHECKSUMS:
+  TwilioAudioProcessors: 45d56fcf3fa74a28c3cdf48dea9a6ab3b48b9c2f
+  TwilioVideo: 82add9f38a9d68a6f9d516989d5c7b3629539edf
+
+PODFILE CHECKSUM: b1ae758e732b8bfdbacaffa940649749c5017eba
+
+COCOAPODS: 1.16.2

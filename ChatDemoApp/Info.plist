@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -21,13 +23,9 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take photos and videos for messaging.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to share images and videos in chat.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone to record videos with audio.</string>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
-	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>
