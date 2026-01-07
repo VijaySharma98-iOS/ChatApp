@@ -224,7 +224,52 @@ final class ChatViewController: UIViewController {
     }
     
     @objc private func audioCallTapped() {
-        // TODO: Implement audio call functionality
+        // Show loading indicator
+        let loadingAlert = UIAlertController(title: nil, message: "Starting audio call...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.startAnimating()
+        loadingAlert.view.addSubview(loadingIndicator)
+        
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: loadingAlert.view.centerXAnchor),
+            loadingIndicator.topAnchor.constraint(equalTo: loadingAlert.view.topAnchor, constant: 65)
+        ])
+        
+        present(loadingAlert, animated: true)
+        
+        // Generate room name and fetch token
+        let roomName = "audio_room_\(user.id)_\(UUID().uuidString.prefix(8))"
+        let currentUserName = user.name
+        
+        TokenService.shared.fetchToken(identity: currentUserName, roomName: roomName) { [weak self] result in
+            DispatchQueue.main.async {
+                loadingAlert.dismiss(animated: true) {
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let token):
+                        let audioVC = AudioCallViewController(
+                            token: token,
+                            roomName: roomName,
+                            callerName: self.user.name,
+                            callerImage: nil // Pass user.profileImage if you have it
+                        )
+                        audioVC.modalPresentationStyle = .fullScreen
+                        self.present(audioVC, animated: true)
+                        
+                    case .failure(let error):
+                        let alert = UIAlertController(
+                            title: "Failed to Start Call",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
     }
     
     @objc private func videoCallTapped() {
