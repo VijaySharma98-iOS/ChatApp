@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		216E17CC2F0E272100F92B1C /* LiveKit in Frameworks */ = {isa = PBXBuildFile; productRef = 216E17CB2F0E272100F92B1C /* LiveKit */; };
 		E076FE8FCBD0BADB0F9356C3 /* Pods_ChatDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9988EF4A275A3DAA27228A00 /* Pods_ChatDemoApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +23,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				VideoCall/VideoCallViewController.swift,
 			);
 			target = 211AB4772F03EC4200AD5BB0 /* ChatDemoApp */;
 		};
@@ -44,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E076FE8FCBD0BADB0F9356C3 /* Pods_ChatDemoApp.framework in Frameworks */,
+				216E17CC2F0E272100F92B1C /* LiveKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +137,9 @@
 			);
 			mainGroup = 211AB46F2F03EC4200AD5BB0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				216E17CA2F0E272100F92B1C /* XCRemoteSwiftPackageReference "client-sdk-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 211AB4792F03EC4200AD5BB0 /* Products */;
 			projectDirPath = "";
@@ -440,6 +446,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		216E17CA2F0E272100F92B1C /* XCRemoteSwiftPackageReference "client-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/client-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		216E17CB2F0E272100F92B1C /* LiveKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 216E17CA2F0E272100F92B1C /* XCRemoteSwiftPackageReference "client-sdk-swift" */;
+			productName = LiveKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 211AB4702F03EC4200AD5BB0 /* Project object */;
 }

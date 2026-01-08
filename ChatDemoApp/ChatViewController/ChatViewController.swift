@@ -94,6 +94,20 @@ final class ChatViewController: UIViewController {
             videoCallAction: #selector(videoCallTapped),
             menuAction: #selector(showTestMenu)
         )
+        
+        let liveStreamButton = UIBarButtonItem(
+            image: UIImage(systemName: "dot.radiowaves.left.and.right"),
+            style: .plain,
+            target: self,
+            action: #selector(liveStreamButtonTapped)
+        )
+        
+        // Get existing right bar button items and append the live stream button
+        var rightItems = navigationItem.rightBarButtonItems ?? []
+        rightItems.append(liveStreamButton)
+        navigationItem.rightBarButtonItems = rightItems
+        
+        
     }
     
     private func setupTableView() {
@@ -223,6 +237,181 @@ final class ChatViewController: UIViewController {
         print("User info tapped - show user profile")
     }
     
+    @objc private func liveStreamButtonTapped() {
+        let alert = UIAlertController(
+            title: "Live Stream",
+            message: "Choose an option",
+            preferredStyle: .actionSheet
+        )
+        
+        alert.addAction(UIAlertAction(title: "Start Broadcasting", style: .default) { [weak self] _ in
+            self?.showStartStreamDialog()
+        })
+        
+        alert.addAction(UIAlertAction(title: "Watch Stream", style: .default) { [weak self] _ in
+            self?.showWatchStreamDialog()
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // For iPad
+        if let popover = alert.popoverPresentationController {
+            popover.barButtonItem = navigationItem.rightBarButtonItems?.last
+        }
+        
+        present(alert, animated: true)
+    }
+    
+    private func showWatchStreamDialog() {
+        let alert = UIAlertController(
+            title: "Watch Live Stream",
+            message: "Enter the stream room ID or share the room link",
+            preferredStyle: .alert
+        )
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Room ID"
+            textField.autocapitalizationType = .none
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Join", style: .default) { [weak self, weak alert] _ in
+            guard let self = self,
+                  let roomName = alert?.textFields?.first?.text,
+                  !roomName.trimmingCharacters(in: .whitespaces).isEmpty else {
+                return
+            }
+            
+            self.joinLiveStream(roomName: roomName.trimmingCharacters(in: .whitespaces))
+        })
+        
+        present(alert, animated: true)
+    }
+    private func startLiveStream(title: String) {
+        // Show loading indicator
+        let loadingAlert = UIAlertController(title: nil, message: "Starting stream...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.startAnimating()
+        loadingAlert.view.addSubview(loadingIndicator)
+        
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: loadingAlert.view.centerXAnchor),
+            loadingIndicator.topAnchor.constraint(equalTo: loadingAlert.view.topAnchor, constant: 65)
+        ])
+        
+        present(loadingAlert, animated: true)
+        
+        // Generate room name and fetch token
+        let roomName = "stream_\(user.id)_\(UUID().uuidString.prefix(8))"
+        let streamerName = user.name
+        
+        TokenService.shared.fetchToken(identity: streamerName, roomName: roomName) { [weak self] result in
+            DispatchQueue.main.async {
+                loadingAlert.dismiss(animated: true) {
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let token):
+                        let streamVC = LiveStreamViewController(
+                            token: token,
+                            roomName: roomName,
+                            streamTitle: title
+                        )
+                        streamVC.modalPresentationStyle = .fullScreen
+                        self.present(streamVC, animated: true)
+                        
+                        // Optionally show room ID for sharing
+                        print("📡 Stream started with room ID: \(roomName)")
+                        
+                    case .failure(let error):
+                        let alert = UIAlertController(
+                            title: "Failed to Start Stream",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
+    }
+
+    private func joinLiveStream(roomName: String) {
+        // Show loading indicator
+        let loadingAlert = UIAlertController(title: nil, message: "Joining stream...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.startAnimating()
+        loadingAlert.view.addSubview(loadingIndicator)
+        
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: loadingAlert.view.centerXAnchor),
+            loadingIndicator.topAnchor.constraint(equalTo: loadingAlert.view.topAnchor, constant: 65)
+        ])
+        
+        present(loadingAlert, animated: true)
+        
+        // Generate viewer identity
+        let viewerName = "Viewer_\(UUID().uuidString.prefix(6))"
+        
+        TokenService.shared.fetchToken(identity: viewerName, roomName: roomName) { [weak self] result in
+            DispatchQueue.main.async {
+                loadingAlert.dismiss(animated: true) {
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let token):
+                        let viewerVC = LiveStreamViewerViewController(
+                            token: token,
+                            roomName: roomName,
+                            streamTitle: "Live Stream",
+                            streamerName: self.user.name
+                        )
+                        viewerVC.modalPresentationStyle = .fullScreen
+                        self.present(viewerVC, animated: true)
+                        
+                    case .failure(let error):
+                        let alert = UIAlertController(
+                            title: "Failed to Join Stream",
+                            message: error.localizedDescription,
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func showStartStreamDialog() {
+        let alert = UIAlertController(
+            title: "Start Live Stream",
+            message: "Enter a title for your stream",
+            preferredStyle: .alert
+        )
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Stream title"
+            textField.autocapitalizationType = .sentences
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Start", style: .default) { [weak self, weak alert] _ in
+            guard let self = self,
+                  let streamTitle = alert?.textFields?.first?.text,
+                  !streamTitle.trimmingCharacters(in: .whitespaces).isEmpty else {
+                return
+            }
+            
+            self.startLiveStream(title: streamTitle)
+        })
+        
+        present(alert, animated: true)
+    }
+    
     @objc private func audioCallTapped() {
         // Show loading indicator
         let loadingAlert = UIAlertController(title: nil, message: "Starting audio call...", preferredStyle: .alert)
@@ -274,50 +463,50 @@ final class ChatViewController: UIViewController {
     
     @objc private func videoCallTapped() {
         // Show loading indicator
-        let loadingAlert = UIAlertController(title: nil, message: "Starting video call...", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(style: .medium)
-        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-        loadingIndicator.startAnimating()
-        loadingAlert.view.addSubview(loadingIndicator)
-        
-        NSLayoutConstraint.activate([
-            loadingIndicator.centerXAnchor.constraint(equalTo: loadingAlert.view.centerXAnchor),
-            loadingIndicator.topAnchor.constraint(equalTo: loadingAlert.view.topAnchor, constant: 65)
-        ])
-        
-        present(loadingAlert, animated: true)
-        
-        // Generate room name and fetch token
-        let roomName = "room_\(user.id)_\(UUID().uuidString.prefix(8))"
-        let currentUserName = "\(user.name)" // Replace with actual current user name
-        
-        TokenService.shared.fetchToken(identity: currentUserName, roomName: roomName) { [weak self] result in
-            DispatchQueue.main.async {
-                loadingAlert.dismiss(animated: true) {
-                    guard let self = self else { return }
-                    
-                    switch result {
-                    case .success(let token):
-                        let videoVC = VideoCallViewController(
-                            token: token,
-                            roomName: roomName,
-                            callerName: self.user.name
-                        )
-                        videoVC.modalPresentationStyle = .fullScreen
-                        self.present(videoVC, animated: true)
-                        
-                    case .failure(let error):
-                        let alert = UIAlertController(
-                            title: "Failed to Start Call",
-                            message: error.localizedDescription,
-                            preferredStyle: .alert
-                        )
-                        alert.addAction(UIAlertAction(title: "OK", style: .default))
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
-        }
+//        let loadingAlert = UIAlertController(title: nil, message: "Starting video call...", preferredStyle: .alert)
+//        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+//        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+//        loadingIndicator.startAnimating()
+//        loadingAlert.view.addSubview(loadingIndicator)
+//        
+//        NSLayoutConstraint.activate([
+//            loadingIndicator.centerXAnchor.constraint(equalTo: loadingAlert.view.centerXAnchor),
+//            loadingIndicator.topAnchor.constraint(equalTo: loadingAlert.view.topAnchor, constant: 65)
+//        ])
+//        
+//        present(loadingAlert, animated: true)
+//        
+//        // Generate room name and fetch token
+//        let roomName = "room_\(user.id)_\(UUID().uuidString.prefix(8))"
+//        let currentUserName = "\(user.name)" // Replace with actual current user name
+//        
+//        TokenService.shared.fetchToken(identity: currentUserName, roomName: roomName) { [weak self] result in
+//            DispatchQueue.main.async {
+//                loadingAlert.dismiss(animated: true) {
+//                    guard let self = self else { return }
+//                    
+//                    switch result {
+//                    case .success(let token):
+//                        let videoVC = VideoCallViewController(
+//                            token: token,
+//                            roomName: roomName,
+//                            callerName: self.user.name
+//                        )
+//                        videoVC.modalPresentationStyle = .fullScreen
+//                        self.present(videoVC, animated: true)
+//                        
+//                    case .failure(let error):
+//                        let alert = UIAlertController(
+//                            title: "Failed to Start Call",
+//                            message: error.localizedDescription,
+//                            preferredStyle: .alert
+//                        )
+//                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//                        self.present(alert, animated: true)
+//                    }
+//                }
+//            }
+//        }
     }
     
     @objc private func showTestMenu() {
